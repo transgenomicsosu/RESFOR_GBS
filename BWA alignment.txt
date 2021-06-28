@@ -1,0 +1,5 @@
+BWA Alignment parameters
+
+Alignment generated with bwa Version: 0.7.8-r455
+bwa aln -t 8 /local/genomes/2148/2148.fa ResFor_pine_20190116/jcg189/MERGETAGCOUNTS/merged.fq bwa samse 
+/local/genomes/2148/2148.fa ResFor_pine_20190116/jcg189/ALIGNMENT/2148.sai ResFor_pine_20190116/jcg189/MERGETAGCOUNTS/merged.fq

@@ -1,0 +1,8 @@
+Genome Info [white spruce assembly v2.0]
+
+Original file: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/404/065/GCA_000404065.3_Ptaeda2.0/GCA_000404065.3_Ptaeda2.0_genomic.fna.gz
+
+[URL:]https://www.ncbi.nlm.nih.gov/genome/11027?genome_assembly_id=301789
+md5sum: 8a910a6bd9a995e595b96ad1cfc208c4
+
+This file was indexed for use with bwa version 0.7.8-r455

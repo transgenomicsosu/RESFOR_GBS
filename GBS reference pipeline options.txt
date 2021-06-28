@@ -1,0 +1,25 @@
+GBS reference pipeline options used for analysis
+
+(not including file direction options – please see TASSEL commands for full list of options used)
+
+#hard coded params
+$config{'SamConverterPlugin.l'} = 2;
+$config{'UExportTagPairPlugin.d'} = 100;
+$config{'FastqToTBTPlugin.y'} = 'y';
+#read config file
+unless (scalar(@ARGV) ==1) {die "$usage";}
+$config{'analysisID'} = '';
+$config{'referenceID'} = ''; #from SLIMS DB, is UNEAK if UNEAK is selected
+$config{'keyfile'} = ''; #created with SLIMS??
+$config{'FastqToTagCountPlugin.c'} = '';
+$config{'MergeMultipleTagCountPlugin.c'} = '';
+$config{'FastqToTBTPlugin.c'} = '';
+$config{'tbt2vcfPlugin.mnMAF'} = '';
+$config{'tbt2vcfPlugin.mnLCov'} = '';
+$config{'tbt2vcfPlugin.ak'} = ''; #use also for MergeDuplicateSNP_vcf_Plugin.ak
+$config{'UTagCountToTagPairPlugin.e'} = '';
+$config{'RAM'} = '';
+$config{'cores'} = '';
+#params that are changed on-the-fly if needed??
+$config{'FastqToTagCountPlugin.s'} = 300000000;
+$config{'MergeTagsByTaxaFilesPlugin.s'} = 300000000;

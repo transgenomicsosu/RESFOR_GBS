@@ -1,0 +1,212 @@
+TASSEL commands
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -FastqToTagCountPlugin -i ResFor_pine_20190116/jcg189/fastq -k ResFor_pine_20190116/jcg189/keyfile.txt -e PstI -s 600000000 
+-c 1 -o ResFor_pine_20190116/jcg189/TAGCOUNTS -endPlugin -runfork1
+
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeMultipleTagCountPlugin -i ResFor_pine_20190116/jcg189/TAGCOUNTS 
+-o ResFor_pine_20190116/jcg189/MERGETAGCOUNTS/merged.cnt -c 20 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -TagCountToFastqPlugin -c 20 -o ResFor_pine_20190116/jcg189/MERGETAGCOUNTS/merged.fq 
+-i ResFor_pine_20190116/jcg189/MERGETAGCOUNTS/merged.cnt -endPlugin -runfork1
+
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -SAMConverterPlugin -o ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin 
+-i ResFor_pine_20190116/jcg189/ALIGNMENT/2148.renamed.sam -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -FastqToTBTPlugin -e PstI -y -c 1 -k /local/workdir/jcg233/working/ResFor_pine_20190116/keyfile.txt 
+-m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -o ResFor_pine_20190116/jcg189/TBT -i ResFor_pine_20190116/jcg189/fastq -endPlugin -runfork1
+
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeTagsByTaxaFilesPlugin -s 600000000 -o ResFor_pine_20190116/jcg189/MERGETBT/2148.tbt.byte 
+-i ResFor_pine_20190116/jcg189/TBT -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeTagsByTaxaFilesPlugin -s 600000000 -o ResFor_pine_20190116/jcg189/MERGETBT_TAXA/2148.merged.tbt.byte 
+-i ResFor_pine_20190116/jcg189/TBT -x -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT/2148.tbt.byte 
+-ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF/ -s 1 -e 1 -endPlugin -runfork1
+
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin 
+-i ResFor_pine_20190116/jcg189/VCF/MERGETBT.c1 -o ResFor_pine_20190116/jcg189/VCF/1.vcf -ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT_TAXA/2148.merged.tbt.byte 
+-ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/ -s 1 -e 1 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/MERGETBT_TAXA.c1 -o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/1.taxamerged.vcf -ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT/2148.tbt.byte 
+-ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF/ -s 10 -e 10 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF/MERGETBT.c10 -o ResFor_pine_20190116/jcg189/VCF/10.vcf -ak 3 -endPlugin -runfork1
+
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT_TAXA/2148.merged.tbt.byte 
+-ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/ -s 10 -e 10 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/MERGETBT_TAXA.c10 
+-o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/10.taxamerged.vcf -ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT/2148.tbt.byte 
+-ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF/ -s 11 -e 11 -endPlugin -runfork1
+
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF/MERGETBT.c11 
+-o ResFor_pine_20190116/jcg189/VCF/11.vcf -ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT_TAXA/2148.merged.tbt.byte 
+-ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/ -s 11 -e 11 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/MERGETBT_TAXA.c11 
+-o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/11.taxamerged.vcf -ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT/2148.tbt.byte -ak 3 -mnLCov 0 -m
+ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF/ -s 12 -e 12 -endPlugin -runfork1
+
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF/MERGETBT.c12 
+-o ResFor_pine_20190116/jcg189/VCF/12.vcf -ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT_TAXA/2148.merged.tbt.byte 
+-ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/ -s 12 -e 12 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/MERGETBT_TAXA.c12 
+-o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/12.taxamerged.vcf -ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT/2148.tbt.byte 
+-ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF/ -s 2 -e 2 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF/MERGETBT.c2 -o ResFor_pine_20190116/jcg189/VCF/2.vcf -ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT_TAXA/2148.merged.tbt.byte -ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/ -s 2 -e 2 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/MERGETBT_TAXA.c2 
+-o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/2.taxamerged.vcf -ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT/2148.tbt.byte 
+-ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF/ -s 3 -e 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF/MERGETBT.c3 -o ResFor_pine_20190116/jcg189/VCF/3.vcf -ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT_TAXA/2148.merged.tbt.byte 
+-ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/ -s 3 -e 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/MERGETBT_TAXA.c3 
+-o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/3.taxamerged.vcf -ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT/2148.tbt.byte -ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF/ -s 4 -e 4 -endPlugin -runfork1
+
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF/MERGETBT.c4 
+-o ResFor_pine_20190116/jcg189/VCF/4.vcf -ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT_TAXA/2148.merged.tbt.byte 
+-ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/ -s 4 -e 4 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/MERGETBT_TAXA.c4 -o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/4.taxamerged.vcf -ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT/2148.tbt.byte 
+-ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF/ -s 5 -e 5 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF/MERGETBT.c5 -o ResFor_pine_20190116/jcg189/VCF/5.vcf -ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT_TAXA/2148.merged.tbt.byte 
+-ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/ -s 5 -e 5 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/MERGETBT_TAXA.c5 
+-o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/5.taxamerged.vcf -ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT/2148.tbt.byte 
+-ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF/ -s 6 -e 6 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF/MERGETBT.c6 -o ResFor_pine_20190116/jcg189/VCF/6.vcf -ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT_TAXA/2148.merged.tbt.byte 
+-ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/ -s 6 -e 6 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/MERGETBT_TAXA.c6 
+-o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/6.taxamerged.vcf -ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT/2148.tbt.byte -ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF/ -s 7 -e 7 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF/MERGETBT.c7 -o ResFor_pine_20190116/jcg189/VCF/7.vcf -ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT_TAXA/2148.merged.tbt.byte -ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/ -s 7 -e 7 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/MERGETBT_TAXA.c7 -o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/7.taxamerged.vcf -ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT/2148.tbt.byte -ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF/ -s 8 -e 8 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF/MERGETBT.c8 -o ResFor_pine_20190116/jcg189/VCF/8.vcf -ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT_TAXA/2148.merged.tbt.byte 
+-ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/ -s 8 -e 8 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/MERGETBT_TAXA.c8 -o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/8.taxamerged.vcf 
+-ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT/2148.tbt.byte 
+-ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF/ -s 9 -e 9 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF/MERGETBT.c9 -o ResFor_pine_20190116/jcg189/VCF/9.vcf -ak 3 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -tbt2vcfPlugin -i ResFor_pine_20190116/jcg189/MERGETBT_TAXA/2148.merged.tbt.byte -ak 3 -mnLCov 0 -m ResFor_pine_20190116/jcg189/TOPM/2148.topm.bin -mnMAF 0.01 -o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/ -s 9 -e 9 -endPlugin -runfork1
+
+Memory Settings: -Xms512m -Xmx32G
+Tassel Pipeline Arguments: -fork1 -MergeDuplicateSNP_vcf_Plugin -i ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/MERGETBT_TAXA.c9 
+-o ResFor_pine_20190116/jcg189/VCF_TAXAMERGE/9.taxamerged.vcf -ak 3 -endPlugin -runfork1
